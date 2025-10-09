@@ -1,7 +1,8 @@
-# This Python 3 environment comes with many helpful analytics libraries installed
+# MERA 
 import numpy as np # linear algebra
 
 
+import matplotlib.pyplot as plt
 from IPython.display import display, Image
 from matplotlib.pyplot import imshow
 from keras.layers import Conv2D, UpSampling2D, InputLayer
@@ -15,7 +16,7 @@ import glob
 import cv2 as cv2
 import os
 import pdb
-folder_path='C:/Users/Morteza/Desktop/YouTube/coding/Image Colorization/BW_small/' 
+folder_path='./bw/' 
 images1 = []
 for img in os.listdir(folder_path):
     img=folder_path+img
@@ -23,9 +24,8 @@ for img in os.listdir(folder_path):
     img = img_to_array(img)/ 255
     X= color.rgb2gray(img)
     images1.append(X)
-#          pdb.set_trace()
 
-folder_path='C:/Users/Morteza/Desktop/YouTube/coding/Image Colorization/colored_small/' 
+folder_path='./coloured/' 
 images2 = []
 for img in os.listdir(folder_path):
     #print(folder_path+img)
@@ -72,8 +72,8 @@ model.fit(X,Y, batch_size=1, epochs=400, verbose=1)
 model.evaluate(X, Y, batch_size=1)
 #pdb.set_trace()
 
-folder_path='C:/Users/Morteza/Desktop/YouTube/coding/Image Colorization/Test/' 
-img='Gray_33.jpg'
+folder_path='./coloured/' 
+img='clr.png'
 img=folder_path+img
 
 
@@ -95,7 +95,6 @@ outputLAB[:,:,1:]=AB_img
 outputLAB = (outputLAB * [100, 255, 255]) - [0, 128, 128]
 rgb_image = lab2rgb(outputLAB)
 
-import matplotlib.pyplot as plt
 
 imshow(rgb_image)
 plt.show()
