@@ -23,7 +23,7 @@ for img in os.listdir(folder_path):
     img = img_to_array(img)/ 255
     X= color.rgb2gray(img)
     images1.append(X)
-#pdb.set_trace()
+#          pdb.set_trace()
 
 folder_path='C:/Users/Morteza/Desktop/YouTube/coding/Image Colorization/colored_small/' 
 images2 = []
