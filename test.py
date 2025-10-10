@@ -17,9 +17,9 @@ import os
 import pdb
 import PIL
 
-model = load_model('./model.h5')
+model = load_model('./model_faces.h5')
 folder_path='./Data/Grayscale_Face_Images/' 
-img='001995.jpg'
+img='002000.jpg'
 img=folder_path+img
 
 width, height = PIL.Image.open(img).size
@@ -42,4 +42,5 @@ outputLAB = (outputLAB * [100, 255, 255]) - [0, 128, 128]
 rgb_image = lab2rgb(outputLAB)
 
 imshow(rgb_image)
+plt.axis("off")
 plt.show()
