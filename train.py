@@ -17,7 +17,7 @@ import os
 import pdb
 import PIL
 
-folder_path='./Data/Black_White/' 
+folder_path='./Data/Grayscale_Face_Images/' 
 images1 = []
 for img in os.listdir(folder_path):
     img=folder_path+img
@@ -27,7 +27,7 @@ for img in os.listdir(folder_path):
     images1.append(X)
 #pdb.set_trace()
 
-folder_path='./Data/colored/' 
+folder_path='./Data/Coloured_Face_Images/' 
 images2 = []
 for img in os.listdir(folder_path):
     #print(folder_path+img)
@@ -69,7 +69,7 @@ x12 = tf.keras.layers.Resizing(256, 256, interpolation='bilinear')(x12)
 model = keras.Model(x1, x12)
 
 model.compile(optimizer='rmsprop', loss='mse')
-model.fit(X,Y, batch_size=8, epochs=2000, verbose=1)
+model.fit(X,Y, batch_size=100, epochs=100, verbose=1)
 
 model.evaluate(X, Y, batch_size=1)
-model.save('model.h5', True, False)
+model.save('model_faces.h5', True, False)

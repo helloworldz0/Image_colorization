@@ -18,8 +18,8 @@ import pdb
 import PIL
 
 model = load_model('./model.h5')
-folder_path='./Data/Test/' 
-img='gray_rural31.jpeg'
+folder_path='./Data/Grayscale_Face_Images/' 
+img='001995.jpg'
 img=folder_path+img
 
 width, height = PIL.Image.open(img).size
