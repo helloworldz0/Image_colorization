@@ -17,22 +17,22 @@ import os
 import pdb
 import PIL
 
-folder_path='./Data/Black_White/' 
+folder_path='./Data/Grayscale_Face_Images/' 
 images1 = []
 for img in os.listdir(folder_path):
     img=folder_path+img
-    img = load_img(img, target_size=(100,100)) 
+    img = load_img(img, target_size=(256,256)) 
     img = img_to_array(img)/ 255
     X= color.rgb2gray(img)
     images1.append(X)
 #pdb.set_trace()
 
-folder_path='./Data/colored/' 
+folder_path='./Data/Coloured_Face_Images/' 
 images2 = []
 for img in os.listdir(folder_path):
     #print(folder_path+img)
     img=folder_path+img
-    img = load_img(img, target_size=(100,100)) 
+    img = load_img(img, target_size=(256,256)) 
     img = img_to_array(img)/ 255
     lab_image = rgb2lab(img)
     lab_image_norm = (lab_image + [0, 128, 128]) / [100, 255, 255]
@@ -63,20 +63,19 @@ x12 = Conv2D(2, (3,3), activation='sigmoid', padding='same')(x11)
 # x12=tf.reshape(x12,(104,104,2))
 # x12 = tf.image.resize(x12,[100, 100])
 # x12=tf.reshape(x12,(1,100, 100,2))
-x12 = tf.keras.layers.Resizing(100, 100, interpolation='bilinear')(x12)
+x12 = tf.keras.layers.Resizing(256, 256, interpolation='bilinear')(x12)
 
 # Finish model
 model = keras.Model(x1, x12)
 
 model.compile(optimizer='rmsprop', loss='mse')
-model.fit(X,Y, batch_size=1, epochs=20, verbose=1)
+model.fit(X,Y, batch_size=100, epochs=100, verbose=1)
 
 model.evaluate(X, Y, batch_size=1)
-model.save('model.h5', True, False)
-#pdb.set_trace()
+model.save('model_faces.h5', True, False)
 
-folder_path='./Data/Test/' 
-img='horse.jpg'
+folder_path='./Data/Grayscale_Face_Images/' 
+img='002000.jpg'
 img=folder_path+img
 
 width, height = PIL.Image.open(img).size
@@ -88,7 +87,7 @@ X = np.array(img)
 X = np.expand_dims(X, axis=2)
 X = np.reshape(X,(1,height,width,1))
 output = model.predict(X)
-output=np.reshape(output,(100,100,2))
+output=np.reshape(output,(256,256,2))
 output=cv2.resize(output,(width,height))
 AB_img = output
 outputLAB = np.zeros((height,width, 3))
@@ -99,4 +98,5 @@ outputLAB = (outputLAB * [100, 255, 255]) - [0, 128, 128]
 rgb_image = lab2rgb(outputLAB)
 
 imshow(rgb_image)
+plt.axis("off")
 plt.show()
