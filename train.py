@@ -21,7 +21,7 @@ folder_path='./Data/Black_White/'
 images1 = []
 for img in os.listdir(folder_path):
     img=folder_path+img
-    img = load_img(img, target_size=(100,100)) 
+    img = load_img(img, target_size=(256,256)) 
     img = img_to_array(img)/ 255
     X= color.rgb2gray(img)
     images1.append(X)
@@ -32,7 +32,7 @@ images2 = []
 for img in os.listdir(folder_path):
     #print(folder_path+img)
     img=folder_path+img
-    img = load_img(img, target_size=(100,100)) 
+    img = load_img(img, target_size=(256,256)) 
     img = img_to_array(img)/ 255
     lab_image = rgb2lab(img)
     lab_image_norm = (lab_image + [0, 128, 128]) / [100, 255, 255]
@@ -63,13 +63,13 @@ x12 = Conv2D(2, (3,3), activation='sigmoid', padding='same')(x11)
 # x12=tf.reshape(x12,(104,104,2))
 # x12 = tf.image.resize(x12,[100, 100])
 # x12=tf.reshape(x12,(1,100, 100,2))
-x12 = tf.keras.layers.Resizing(100, 100, interpolation='bilinear')(x12)
+x12 = tf.keras.layers.Resizing(256, 256, interpolation='bilinear')(x12)
 
 # Finish model
 model = keras.Model(x1, x12)
 
 model.compile(optimizer='rmsprop', loss='mse')
-model.fit(X,Y, batch_size=1, epochs=500, verbose=1)
+model.fit(X,Y, batch_size=8, epochs=2000, verbose=1)
 
 model.evaluate(X, Y, batch_size=1)
 model.save('model.h5', True, False)

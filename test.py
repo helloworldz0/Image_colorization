@@ -19,7 +19,7 @@ import PIL
 
 model = load_model('./model.h5')
 folder_path='./Data/Test/' 
-img='horse.jpg'
+img='gray_rural31.jpeg'
 img=folder_path+img
 
 width, height = PIL.Image.open(img).size
@@ -31,7 +31,7 @@ X = np.array(img)
 X = np.expand_dims(X, axis=2)
 X = np.reshape(X,(1,height,width,1))
 output = model.predict(X)
-output=np.reshape(output,(100,100,2))
+output=np.reshape(output,(256,256,2))
 output=cv2.resize(output,(width,height))
 AB_img = output
 outputLAB = np.zeros((height,width, 3))
