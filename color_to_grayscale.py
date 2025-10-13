@@ -2,37 +2,64 @@ import cv2
 import os
 import glob
 
-# Set the source and destination folders
-source_folder = './Data/Coloured_Face_Images/'
-destination_folder = './Data/Grayscale_Face_Images/'
+# === Configuration ===
+source_folder = r'./Data/Colored_2/'
+destination_folder = r'./Data/Grayscale_2/'
+
+# === Setup ===
+success = 0
+failure = 0
 
 # Create destination folder if it doesn't exist
 os.makedirs(destination_folder, exist_ok=True)
 
-# Get list of image files (you can adjust the extensions)
-image_extensions = ('*.jpg', '*.jpeg', '*.png', '*.bmp')
+# Collect all supported image extensions
+image_extensions = ('*.jpg', '*.jpeg', '*.png', '*.bmp', '*.tiff', '*.webp')
+
 image_paths = []
 for ext in image_extensions:
     image_paths.extend(glob.glob(os.path.join(source_folder, ext)))
 
-# Process each image
-for img_path in image_paths:
-    # Extract the filename
-    filename = os.path.basename(img_path)
+# Normalize paths and remove duplicates (case-insensitive on Windows)
+image_paths = list({os.path.normcase(os.path.normpath(p)) for p in image_paths})
 
-    # Read the image
-    color_img = cv2.imread(img_path)
-    if color_img is None:
-        print(f"Failed to load image: {filename}")
+print(f"Found {len(image_paths)} candidate images.\n")
+
+# === Process each image ===
+for img_path in sorted(image_paths):
+    # Skip non-files (in case folders slip in)
+    if not os.path.isfile(img_path):
+        print(f"Skipping non-file: {img_path}")
         continue
 
-    # Convert to grayscale
-    gray_img = cv2.cvtColor(color_img, cv2.COLOR_BGR2GRAY)
+    # Extract just the filename
+    filename = os.path.basename(img_path)
 
-    # Save to destination folder with same filename
-    output_path = os.path.join(destination_folder, filename)
-    cv2.imwrite(output_path, gray_img)
+    # Try loading the image
+    color_img = cv2.imread(img_path)
 
-    print(f"Converted and saved: {output_path}")
+    # Check if load failed (corrupted, mislabeled, etc.)
+    if color_img is None:
+        print(f"❌ Failed to load image: {filename}")
+        failure += 1
+        continue
 
-print("All images processed.")
+    try:
+        # Convert to grayscale
+        gray_img = cv2.cvtColor(color_img, cv2.COLOR_BGR2GRAY)
+
+        # Save to destination folder
+        output_path = os.path.join(destination_folder, filename)
+        cv2.imwrite(output_path, gray_img)
+
+        print(f"✅ Converted and saved: {output_path}")
+        success += 1
+
+    except Exception as e:
+        print(f"⚠️ Error processing {filename}: {e}")
+        failure += 1
+
+print("\n=== SUMMARY ===")
+print(f"Total processed: {len(image_paths)}")
+print(f"Successfully converted: {success}")
+print(f"Failed or unreadable: {failure}")
