@@ -59,8 +59,3 @@ plt.imshow(rgb_image)
 plt.title('Colorized Output')
 plt.axis('off')
 plt.show()
-
-# plt.plot(history.history['loss'], label='train_loss')
-# plt.plot(history.history['val_loss'], label='val_loss')
-# plt.legend()
-# plt.show()
