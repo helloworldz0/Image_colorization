@@ -5,6 +5,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Qt5Agg')  # Use the appropriate backend for your environment
+import matplotlib
+matplotlib.use('Qt5Agg')  # Use the appropriate backend for your environment
 import tensorflow as tf
 import random
 from PIL import Image as PILImage
