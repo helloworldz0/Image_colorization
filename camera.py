@@ -1,11 +1,8 @@
-# Aditya's Improved Version
 import tensorflow as tf
 import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('Qt5Agg')  # Use the appropriate backend for your environment
 import random
 from PIL import Image as PILImage
 from tensorflow import keras
@@ -18,14 +15,11 @@ seed = 42
 np.random.seed(seed)
 tf.random.set_seed(seed)
 random.seed(seed)
-
-# --------------------------------------------------
-# Predict and visualize result
-# --------------------------------------------------
 model = load_model('best_model_faces.keras',compile=False)
 folder_path = './Data/Grayscale_2/'
 cam=cv2.VideoCapture(0)
 ret,frame=cam.read()
+print()
 cam.release()
 cv2.imwrite('165.jpg',frame)
 img = '165.jpg'
