@@ -21,9 +21,19 @@ random.seed(seed)
 # Predict and visualize result
 # --------------------------------------------------
 model = load_model('./best_model_faces.h5')
-folder_path = './Data/Grayscale_2/'
-img = '1664.jpg'
-img = folder_path + img
+# folder_path = './Data/Grayscale_2/'
+# img = '1664.jpg'
+# img = folder_path + img
+
+# Create a VideoCapture object
+cap = cv2.VideoCapture(0)
+# Capture a single frame
+ret, frame = cap.read()
+# Release the video capture device
+cap.release()
+
+cv2.imwrite('./temp.jpg', frame)
+img = './temp.jpg'
 
 width, height = PILImage.open(img).size
 print(width, height)
