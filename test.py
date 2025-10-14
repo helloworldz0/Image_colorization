@@ -3,6 +3,8 @@ import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Qt5Agg')  # Use the appropriate backend for your environment
 import tensorflow as tf
 import random
 from PIL import Image as PILImage
@@ -20,7 +22,7 @@ random.seed(seed)
 # --------------------------------------------------
 # Predict and visualize result
 # --------------------------------------------------
-model = load_model('./best_model_faces.h5')
+model = load_model('model_faces_improved.h5')
 folder_path = './Data/Grayscale_2/'
 img = '1664.jpg'
 img = folder_path + img
