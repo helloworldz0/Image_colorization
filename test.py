@@ -21,6 +21,9 @@ random.seed(seed)
 # Predict and visualize result
 # --------------------------------------------------
 model = load_model('./best_model_faces.h5', compile=False)
+# folder_path = './Data/Grayscale_2/'
+# img = '1664.jpg'
+# img = folder_path + img
 
 # Create a VideoCapture object
 cap = cv2.VideoCapture(1)
