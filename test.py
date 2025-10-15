@@ -11,7 +11,7 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img, ImageDa
 from tensorflow.keras.models import Model, load_model # type: ignore
 from sklearn.model_selection import train_test_split
 from skimage.color import lab2rgb, rgb2lab
-from tk import *
+# from tk import *
 seed = 42
 np.random.seed(seed)
 tf.random.set_seed(seed)
