@@ -11,6 +11,7 @@ from tensorflow.keras.preprocessing.image import img_to_array, load_img, ImageDa
 from tensorflow.keras.models import Model, load_model # type: ignore
 from sklearn.model_selection import train_test_split
 from skimage.color import lab2rgb, rgb2lab
+from tk import *
 seed = 42
 np.random.seed(seed)
 tf.random.set_seed(seed)
@@ -23,16 +24,7 @@ model = load_model('./best_model_faces.h5', compile=False)
 cap = cv2.VideoCapture(0)
 # Capture a single frame
 ret, frame = cap.read()
-# Release the video capture device
 cap.release()
-
-# # Crop the image (you can adjust the coordinates)
-# x, y, w, h = 160, 256, 320, 256
-# cropped_frame = frame[y:y+h, x:x+w]
-
-# cv2.imwrite('./temp.jpg', frame)
-# img = './temp.jpg'
-
 cv2.imwrite('./temp.jpg', frame)
 img = './temp.jpg'
 cv2.imshow("dis",frame)
