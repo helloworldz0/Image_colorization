@@ -20,8 +20,8 @@ random.seed(seed)
 # --------------------------------------------------
 # Load and prepare the grayscale and color images
 # --------------------------------------------------
-gray_folder = './Data/Grayscale_3/'
-color_folder = './Data/Colored_3/'
+gray_folder = './Data/Grayscale_2/'
+color_folder = './Data/Colored_2/'
 
 gray_files = sorted([f for f in os.listdir(gray_folder) if os.path.isfile(os.path.join(gray_folder, f))])
 color_files = sorted([f for f in os.listdir(color_folder) if os.path.isfile(os.path.join(color_folder, f))])
@@ -111,15 +111,15 @@ callbacks = [
 ]
 
 history = model.fit(
-    datagen.flow(X_train, Y_train, batch_size=32, shuffle=True, seed=seed),
-    epochs=500,
+    datagen.flow(X_train, Y_train, batch_size=64, shuffle=True, seed=seed),
+    epochs=100,
     verbose=2,
     validation_data=(X_val, Y_val),
     callbacks=callbacks
 )
 
 # Evaluate on validation set
-model.evaluate(X_val, Y_val, batch_size=128, verbose=2)
+model.evaluate(X_val, Y_val, batch_size=256, verbose=2)
 
 # Save model
 model.save('model_faces_improved.h5')
