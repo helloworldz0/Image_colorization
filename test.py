@@ -26,17 +26,27 @@ model = load_model('./best_model_faces.h5', compile=False)
 # img = folder_path + img
 
 # Create a VideoCapture object
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 # Capture a single frame
 ret, frame = cap.read()
 # Release the video capture device
 cap.release()
 
-cv2.imwrite('./temp.jpg', frame)
+# Crop the image (you can adjust the coordinates)
+x, y, w, h = 160, 120, 320, 240
+cropped_frame = frame[y:y+h, x:x+w]
+
+# cv2.imwrite('./temp.jpg', frame)
+# img = './temp.jpg'
+
+cv2.imwrite('./temp.jpg', cropped_frame)
 img = './temp.jpg'
 
+# width, height = PILImage.open(img).size
+# print("Width, Height(Uncropped): ", width, height)
+
 width, height = PILImage.open(img).size
-print(width, height)
+print("Width, Height(Cropped): ", width, height)
 
 gray_img = load_img(img, color_mode='grayscale', target_size=(256,256))
 gray_img = img_to_array(gray_img).astype('float32') / 255.0
