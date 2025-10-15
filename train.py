@@ -106,7 +106,6 @@ datagen = ImageDataGenerator(horizontal_flip=True, rotation_range=10, zoom_range
 
 callbacks = [
     keras.callbacks.ModelCheckpoint('testmodelscheckpoint.keras', save_best_only=True, monitor='val_loss'),
-    # keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True),
     keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, verbose=1)
 ]
 
