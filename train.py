@@ -67,19 +67,19 @@ x1 = keras.Input(shape=(256, 256, 1))
 
 x2 = Conv2D(16, (3, 3), strides=2, padding='same')(x1)
 x2 = BatchNormalization()(x2)
-x2 = Activation('relu')(x2)
+x2 = Activation('tanh')(x2)
 
 x3 = Conv2D(32, (3, 3), strides=2, padding='same')(x2)
 x3 = BatchNormalization()(x3)
-x3 = Activation('relu')(x3)
+x3 = Activation('tanh')(x3)
 
 x4 = Conv2D(64, (3, 3), strides=2, padding='same')(x3)
 x4 = BatchNormalization()(x4)
-x4 = Activation('relu')(x4)
+x4 = Activation('tanh')(x4)
 
 x4b = Conv2D(128, (3, 3), padding='same')(x4)
 x4b = BatchNormalization()(x4b)
-x4b = Activation('relu')(x4b)
+x4b = Activation('tanh')(x4b)
 
 x5 = UpSampling2D((2, 2))(x4b)
 x5 = Conv2D(32, (3, 3), padding='same', activation='relu')(x5)
@@ -90,7 +90,7 @@ x6 = Conv2D(16, (3, 3), padding='same', activation='relu')(x6)
 x6 = BatchNormalization()(x6)
 
 x7 = UpSampling2D((2, 2))(x6)
-x7 = Conv2D(2, (3, 3), activation='tanh', padding='same')(x7)
+x7 = Conv2D(2, (3, 3), activation='sigmoid', padding='same')(x7)
 
 model = keras.Model(x1, x7)
 model.compile(optimizer='adam', loss=tf.keras.losses.Huber())
