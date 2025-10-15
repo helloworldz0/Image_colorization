@@ -19,5 +19,5 @@ def rename_files_with_numbers(folder_path):
 
 # Example usage
 if __name__ == "__main__":
-    folder_path = r"C:/Users/aditya/Downloads/Colored_2/gender_dataset/women"
+    folder_path = r"./Data/Colored_2/"
     rename_files_with_numbers(folder_path)

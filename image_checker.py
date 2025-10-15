@@ -140,5 +140,5 @@ def scan_folder_for_problems(folder_path, save_report=True, move_bad_files=False
 
 
 if __name__ == "__main__":
-    folder = r"C:/Users/aditya/Downloads/Colored_2/gender_dataset/women"  # <-- Change this path
+    folder = r"./Data/Colored_2/"  # <-- Change this path
     scan_folder_for_problems(folder, save_report=False, move_bad_files=False)
