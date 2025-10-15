@@ -20,8 +20,8 @@ random.seed(seed)
 # --------------------------------------------------
 # Load and prepare the grayscale and color images
 # --------------------------------------------------
-gray_folder = './Data/Grayscale_2/'
-color_folder = './Data/Colored_2/'
+gray_folder = './Data/Grayscale_People_Images/'
+color_folder = './Data/Colored_People_Images/'
 
 gray_files = sorted([f for f in os.listdir(gray_folder) if os.path.isfile(os.path.join(gray_folder, f))])
 color_files = sorted([f for f in os.listdir(color_folder) if os.path.isfile(os.path.join(color_folder, f))])
