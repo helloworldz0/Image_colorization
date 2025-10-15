@@ -1,9 +1,8 @@
-# Aditya's Improved Version
-import tensorflow as tf
 import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import tensorflow as tf
 import random
 from PIL import Image as PILImage
 from tensorflow import keras
@@ -16,42 +15,57 @@ seed = 42
 np.random.seed(seed)
 tf.random.set_seed(seed)
 random.seed(seed)
-model = load_model('best_model_faces.keras',compile=False)
-folder_path = './Data/Grayscale_2/'
-cam=cv2.VideoCapture(0)
-ret,frame=cam.read()
-cam.release()
-frame=np.array(frame)
-print(frame.shape)
 
 # --------------------------------------------------
 # Predict and visualize result
 # --------------------------------------------------
-model = load_model('./best_model_faces.h5', compile=False)
-
-# Create a VideoCapture object
+model = load_model('./best_model_faces.keras', compile=False)
 cap = cv2.VideoCapture(1)
 # Capture a single frame
 ret, frame = cap.read()
 # Release the video capture device
 cap.release()
 
-# Crop the image (you can adjust the coordinates)
-x, y, w, h = 160, 120, 320, 240
-cropped_frame = frame[y:y+h, x:x+w]
+# # Crop the image (you can adjust the coordinates)
+# x, y, w, h = 160, 256, 320, 256
+# cropped_frame = frame[y:y+h, x:x+w]
 
 # cv2.imwrite('./temp.jpg', frame)
 # img = './temp.jpg'
 
-cv2.imwrite('./temp.jpg', cropped_frame)
+cv2.imwrite('./temp.jpg', frame)
 img = './temp.jpg'
-
-# width, height = PILImage.open(img).size
-# print("Width, Height(Uncropped): ", width, height)
-
 width, height = PILImage.open(img).size
 print("Width, Height(Cropped): ", width, height)
 
 gray_img = load_img(img, color_mode='grayscale', target_size=(256,256))
 gray_img = img_to_array(gray_img).astype('float32') / 255.0
 X_test = np.reshape(gray_img, (1, 256, 256, 1))
+
+output = model.predict(X_test)
+output = np.reshape(output, (256, 256, 2))
+output = cv2.resize(output, (width, height), interpolation=cv2.INTER_CUBIC)
+
+outputLAB = np.zeros((height, width, 3), dtype=np.float32)
+img_resized = cv2.resize(np.reshape(gray_img, (256, 256)), (width, height), interpolation=cv2.INTER_CUBIC)
+
+# Denormalize: L*100, a,b*128
+outputLAB[:, :, 0] = img_resized * 100.0
+outputLAB[:, :, 1:] = output * 128.0
+
+# Clip to valid LAB ranges
+outputLAB[:, :, 0] = np.clip(outputLAB[:, :, 0], 0, 100)
+outputLAB[:, :, 1:] = np.clip(outputLAB[:, :, 1:], -128, 127)
+
+rgb_image = lab2rgb(outputLAB)
+
+plt.subplot(1,2,1)
+plt.imshow(img_resized, cmap='gray')
+plt.title('Input (Grayscale)')
+plt.axis('off')
+
+plt.subplot(1,2,2)
+plt.imshow(rgb_image)
+plt.title('Colorized Output')
+plt.axis('off')
+plt.show()

@@ -105,7 +105,7 @@ X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.1, random_st
 datagen = ImageDataGenerator(horizontal_flip=True, rotation_range=10, zoom_range=0.1)
 
 callbacks = [
-    keras.callbacks.ModelCheckpoint('best_model_faces.keras', save_best_only=True, monitor='val_loss'),
+    keras.callbacks.ModelCheckpoint('testmodelscheckpoint.keras', save_best_only=True, monitor='val_loss'),
     # keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True),
     keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, verbose=1)
 ]
@@ -122,4 +122,4 @@ history = model.fit(
 model.evaluate(X_val, Y_val, batch_size=256, verbose=2)
 
 # Save model
-model.save('model_faces_improved.h5')
+model.save('testmodels.keras')
