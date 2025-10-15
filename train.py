@@ -1,4 +1,3 @@
-# Aditya's Improved Version
 import os
 import cv2
 import numpy as np
@@ -67,19 +66,19 @@ x1 = keras.Input(shape=(256, 256, 1))
 
 x2 = Conv2D(16, (3, 3), strides=2, padding='same')(x1)
 x2 = BatchNormalization()(x2)
-x2 = Activation('tanh')(x2)
+x2 = Activation('relu')(x2)
 
 x3 = Conv2D(32, (3, 3), strides=2, padding='same')(x2)
 x3 = BatchNormalization()(x3)
-x3 = Activation('tanh')(x3)
+x3 = Activation('relu')(x3)
 
 x4 = Conv2D(64, (3, 3), strides=2, padding='same')(x3)
 x4 = BatchNormalization()(x4)
-x4 = Activation('tanh')(x4)
+x4 = Activation('relu')(x4)
 
 x4b = Conv2D(128, (3, 3), padding='same')(x4)
 x4b = BatchNormalization()(x4b)
-x4b = Activation('tanh')(x4b)
+x4b = Activation('relu')(x4b)
 
 x5 = UpSampling2D((2, 2))(x4b)
 x5 = Conv2D(32, (3, 3), padding='same', activation='relu')(x5)
@@ -105,13 +104,13 @@ X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.1, random_st
 datagen = ImageDataGenerator(horizontal_flip=True, rotation_range=10, zoom_range=0.1)
 
 callbacks = [
-    keras.callbacks.ModelCheckpoint('testmodelscheckpoint.keras', save_best_only=True, monitor='val_loss'),
+    keras.callbacks.ModelCheckpoint('200modelscheckpoint.keras', save_best_only=True, monitor='val_loss'),
     keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, verbose=1)
 ]
 
 history = model.fit(
     datagen.flow(X_train, Y_train, batch_size=64, shuffle=True, seed=seed),
-    epochs=100,
+    epochs=50,
     verbose=2,
     validation_data=(X_val, Y_val),
     callbacks=callbacks
@@ -119,6 +118,4 @@ history = model.fit(
 
 # Evaluate on validation set
 model.evaluate(X_val, Y_val, batch_size=256, verbose=2)
-
-# Save model
-model.save('testmodels.keras')
+model.save('200epochmodels.keras')
