@@ -20,7 +20,7 @@ random.seed(seed)
 # --------------------------------------------------
 # Predict and visualize result
 # --------------------------------------------------
-model = load_model('./best_model_faces.h5', compile=False)
+model = load_model('./tests.keras', compile=False)
 cap = cv2.VideoCapture(0)
 # Capture a single frame
 ret, frame = cap.read()
