@@ -1,4 +1,3 @@
-# Aditya's Improved Version
 import os
 import cv2
 import numpy as np
@@ -82,11 +81,11 @@ x4b = BatchNormalization()(x4b)
 x4b = Activation('tanh')(x4b)
 
 x5 = UpSampling2D((2, 2))(x4b)
-x5 = Conv2D(32, (3, 3), padding='same', activation='relu')(x5)
+x5 = Conv2D(32, (3, 3), padding='same', activation='tanh')(x5)
 x5 = BatchNormalization()(x5)
 
 x6 = UpSampling2D((2, 2))(x5)
-x6 = Conv2D(16, (3, 3), padding='same', activation='relu')(x6)
+x6 = Conv2D(16, (3, 3), padding='same', activation='tanh')(x6)
 x6 = BatchNormalization()(x6)
 
 x7 = UpSampling2D((2, 2))(x6)
@@ -105,14 +104,13 @@ X_train, X_val, Y_train, Y_val = train_test_split(X, Y, test_size=0.1, random_st
 datagen = ImageDataGenerator(horizontal_flip=True, rotation_range=10, zoom_range=0.1)
 
 callbacks = [
-    keras.callbacks.ModelCheckpoint('testmodelscheckpoint.keras', save_best_only=True, monitor='val_loss'),
-    # keras.callbacks.EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True),
+    keras.callbacks.ModelCheckpoint('200modelscheckpoint.keras', save_best_only=True, monitor='val_loss'),
     keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, verbose=1)
 ]
 
 history = model.fit(
     datagen.flow(X_train, Y_train, batch_size=64, shuffle=True, seed=seed),
-    epochs=100,
+    epochs=50,
     verbose=2,
     validation_data=(X_val, Y_val),
     callbacks=callbacks
@@ -120,6 +118,4 @@ history = model.fit(
 
 # Evaluate on validation set
 model.evaluate(X_val, Y_val, batch_size=256, verbose=2)
-
-# Save model
-model.save('testmodels.keras')
+model.save('200epochmodels.keras')

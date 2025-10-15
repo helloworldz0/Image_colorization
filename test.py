@@ -19,8 +19,8 @@ random.seed(seed)
 # --------------------------------------------------
 # Predict and visualize result
 # --------------------------------------------------
-model = load_model('./best_model_faces.keras', compile=False)
-cap = cv2.VideoCapture(1)
+model = load_model('./best_model_faces.h5', compile=False)
+cap = cv2.VideoCapture(0)
 # Capture a single frame
 ret, frame = cap.read()
 # Release the video capture device
@@ -35,6 +35,7 @@ cap.release()
 
 cv2.imwrite('./temp.jpg', frame)
 img = './temp.jpg'
+cv2.imshow("dis",frame)
 width, height = PILImage.open(img).size
 print("Width, Height(Cropped): ", width, height)
 
