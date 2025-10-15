@@ -3,8 +3,8 @@ import os
 import glob
 
 # === Configuration ===
-source_folder = r'./Data/Colored_2/'
-destination_folder = r'./Data/Grayscale_2/'
+source_folder = r'./Data/Colored_3/'
+destination_folder = r'./Data/Grayscale_3/'
 
 # === Setup ===
 success = 0
