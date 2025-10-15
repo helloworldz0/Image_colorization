@@ -24,8 +24,34 @@ cam.release()
 frame=np.array(frame)
 print(frame.shape)
 
-width, height =640,480
-# frame = keras.utils.array_to_img(frame)
-# gray_img = load_img(frame, color_mode='grayscale', target_size=(256,256))
-gray_img = frame[192:448,112:368]
+# --------------------------------------------------
+# Predict and visualize result
+# --------------------------------------------------
+model = load_model('./best_model_faces.h5', compile=False)
+
+# Create a VideoCapture object
+cap = cv2.VideoCapture(1)
+# Capture a single frame
+ret, frame = cap.read()
+# Release the video capture device
+cap.release()
+
+# Crop the image (you can adjust the coordinates)
+x, y, w, h = 160, 120, 320, 240
+cropped_frame = frame[y:y+h, x:x+w]
+
+# cv2.imwrite('./temp.jpg', frame)
+# img = './temp.jpg'
+
+cv2.imwrite('./temp.jpg', cropped_frame)
+img = './temp.jpg'
+
+# width, height = PILImage.open(img).size
+# print("Width, Height(Uncropped): ", width, height)
+
+width, height = PILImage.open(img).size
+print("Width, Height(Cropped): ", width, height)
+
+gray_img = load_img(img, color_mode='grayscale', target_size=(256,256))
+gray_img = img_to_array(gray_img).astype('float32') / 255.0
 X_test = np.reshape(gray_img, (1, 256, 256, 1))
