@@ -17,12 +17,8 @@ np.random.seed(seed)
 tf.random.set_seed(seed)
 random.seed(seed)
 
-# --------------------------------------------------
-# Predict and visualize result
-# --------------------------------------------------
 model = load_model('./tests.keras', compile=False)
 cap = cv2.VideoCapture(0)
-# Capture a single frame
 ret, frame = cap.read()
 cap.release()
 cv2.imwrite('./temp.jpg', frame)
