@@ -1,23 +1,55 @@
-from tk import *
-from tkinter import *
+import tkinter as tk
 
-def on_button_click():
-    print("Button was clicked!")
+def on_run_click():
+    print("Run program")
 
-# 1. Create the main window
-root = Tk()
+def on_stop_click():
+    print("Stop program")
 
-# 2. Configure window properties
-root.title("Simple Tkinter App")
-root.geometry("300x150")
+def on_view_click():
+    print("View images")
 
-# 3. Add widgets
-label = Label(root, text="Welcome to Tkinter!")
-button = Button(root, text="Press Me", command=on_button_click)
+def on_enter_1(event):
+    button1.config(bg="lightblue", fg="black")
 
-# 4. Arrange widgets
-label.pack(pady=10) # Add some padding
-button.pack()
+def on_enter_2(event):
+    button2.config(bg="lightblue", fg="black")
 
-# 5. Start the event loop
+def on_enter_3(event):
+    button3.config(bg="lightblue", fg="black")
+
+def on_leave_1(event):
+    button1.config(bg="#f0f0f0", fg="black")
+
+def on_leave_2(event):
+    button2.config(bg="#f0f0f0", fg="black")
+
+def on_leave_3(event):
+    button3.config(bg="#f0f0f0", fg="black")
+
+root = tk.Tk()
+root.title("My Simple GUI")
+root.geometry("1280x720")
+
+label = tk.Label(root, text="GUI for Image Colorizer!", font=("Arial", 50))
+label.pack(pady=25)
+
+button1 = tk.Button(root, text="Run", command=on_run_click, width=25, height=5)
+button1.pack(pady=25)
+
+button2 = tk.Button(root, text="Stop", command=on_stop_click, width=25, height=5)
+button2.pack(pady=25)
+
+button3 = tk.Button(root, text="View", command=on_view_click, width=25, height=5)
+button3.pack(pady=25)
+
+button1.bind("<Enter>", on_enter_1)
+button1.bind("<Leave>", on_leave_1)
+
+button2.bind("<Enter>", on_enter_2)
+button2.bind("<Leave>", on_leave_2)
+
+button3.bind("<Enter>", on_enter_3)
+button3.bind("<Leave>", on_leave_3)
+
 root.mainloop()
