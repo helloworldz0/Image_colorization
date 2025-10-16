@@ -54,6 +54,7 @@ class ColorizationApp(QWidget):
             cam=cv2.VideoCapture(0)
             ret,frame=cam.read()
             cam.release()
+            
             img = 'temp.jpg'
             cv2.imwrite(img,frame)
             self.model.bw(img)
