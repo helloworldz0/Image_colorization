@@ -46,7 +46,7 @@ root = tk.Tk()
 root.title("My Simple GUI")
 root.geometry("1280x720")
 
-label = tk.Label(root, text="GUI for Image Colorizer!", font=("Arial", 50))
+label = tk.Label(root, text="Image Colorizer", font=("Arial", 50))
 label.pack(pady=25)
 
 # --------------------------------------------------
@@ -129,13 +129,13 @@ def on_view_click():
             win32gui.SetForegroundWindow(hwnd)
             break
 
-button1 = tk.Button(root, text="Run", command=on_run_click, width=25, height=5, font=("Arial", 20))
+button1 = tk.Button(root, text="Run", command=on_run_click, width=25, height=5, font=("Arial", 15))
 button1.pack(pady=25)
 
-button2 = tk.Button(root, text="View", command=on_view_click, width=25, height=5, font=("Arial", 20))
+button2 = tk.Button(root, text="View", command=on_view_click, width=25, height=5, font=("Arial", 15))
 button2.pack(pady=25)
 
-button3 = tk.Button(root, text="Stop", command=on_stop_click, width=25, height=5, font=("Arial", 20))
+button3 = tk.Button(root, text="Stop", command=on_stop_click, width=25, height=5, font=("Arial", 15))
 button3.pack(pady=25)
 
 button1.bind("<Enter>", on_enter_1)
